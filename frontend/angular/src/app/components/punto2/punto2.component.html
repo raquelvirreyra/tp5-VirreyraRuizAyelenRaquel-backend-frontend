@@ -1,0 +1,125 @@
+<div class="container">
+    <div class="text-center mt-4 mb-3">
+        <legend>Conversor de Divisas</legend>
+        <a href="punto2-table" class="p-2 link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Ver transacciones realizadas</a>
+    </div>
+    <section class="row">
+        <div class="col-md-8 d-none d-md-block">
+            <div class="mt-4 mb-4">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"><img src="assets/bandera1.jpg" alt="USD" width="30rem"
+                                    height="25rem"><br>USD</th>
+                            <th scope="col"><img src="assets/bandera2.jpg" alt="EUR" width="30rem"
+                                    height="25rem"><br>EUR</th>
+                            <th scope="col"><img src="assets/bandera3.jpg" alt="ARS" width="30rem"
+                                    height="25rem"><br>ARS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class=""><img src="assets/bandera1.jpg" alt="USD" width="30rem"
+                                    height="25rem"></th>
+                            <th scope="row">1 USD<br>Inverse</th>
+                            <td>1.000000<br>1.000000</td>
+                            <td>0.912392<br>1.712394</td>
+                            <td>64.24592<br>0.120919</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class=""><img src="assets/bandera2.jpg" alt="USD" width="30rem"
+                                    height="25rem"></th>
+                            <th scope="row">1 EUR<br>Inverse</th>
+                            <td>1.182391<br>12.77483</td>
+                            <td>1.000000<br>1.000000</td>
+                            <td>1.012810<br>8.868326</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class=""><img src="assets/bandera4.jpg" alt="USD" width="30rem"
+                                    height="25rem"></th>
+                            <th scope="row">1 GBP<br>Inverse</th>
+                            <td>1.054330<br>3.123456</td>
+                            <td>0.129491<br>12.19299</td>
+                            <td>1.012220<br>1.824496</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class=""><img src="assets/bandera5.jpg" alt="USD" width="30rem"
+                                    height="25rem"></th>
+                            <th scope="row">1 RUB<br>Inverse</th>
+                            <td>1.123310<br>8.868326</td>
+                            <td>5.291290<br>1.2039191</td>
+                            <td>1.2922810<br>31.12929</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <aside class="col-md-4">
+            <form #formConvert="ngForm">
+                <div class="mt-4 mb-4">
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label">Email</label>
+                        <input type="email" id="inputEmail" class="form-control" [(ngModel)]="emailCliente" name="emailcliente"
+                            #email="ngModel" required placeholder="example@example.com">
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="email.errors?.['required']">
+                                Este campo es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cantidad" class="form-label">Cantidad</label>
+                        <input type="number" id="cantidad" class="form-control" [(ngModel)]="fromValue" name="fromValue"
+                            #cantidad="ngModel" required min="1">
+                        <div *ngIf="cantidad.invalid && (cantidad.dirty || cantidad.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="cantidad.errors?.['required']">
+                                Ingrese un valor.
+                            </div>
+                            <div *ngIf="cantidad.errors?.['min']">
+                                La cantidad minima es 1.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deSelect" class="form-label">De</label>
+                        <select id="deSelect" class="form-select" [(ngModel)]="fromType" name="fromType" #from="ngModel"
+                            required>
+                            <option *ngFor="let m of monedas" [value]="m">{{m}}</option>
+                        </select>
+                        <div *ngIf="from.invalid && (from.dirty || from.touched)" class="alert alert-danger">
+                            <div *ngIf="from.errors?.['required']">
+                                Seleccione una moneda.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="aSelect" class="form-label">A</label>
+                        <select id="aSelect" class="form-select" [(ngModel)]="toType" name="toType" #to="ngModel"
+                            required>
+                            <option *ngFor="let m of monedas" [value]="m">{{m}}</option>
+                        </select>
+                        <div *ngIf="to.invalid && (from.dirty || to.touched)" class="alert alert-danger">
+                            <div *ngIf="to.errors?.['required']">
+                                Seleccione una moneda.
+                            </div>
+                        </div>
+                    </div>
+                    <fieldset disabled>
+                        <div class="mb-3">
+                            <label for="resultado" class="form-label">Resultado:</label>
+                            <input type="number" id="resultado" class="form-control" placeholder="{{result}}">
+                        </div>
+                    </fieldset>
+                      
+                    <div id="alertPlaceholder"></div>
+                    <button type="submit" class="btn btn-primary" (click)="convertir()" onclick="mostrarAlerta()" [disabled]="!formConvert.form.valid">Convertir</button>
+                </div>
+            </form>
+        </aside>
+    </section>
+</div>

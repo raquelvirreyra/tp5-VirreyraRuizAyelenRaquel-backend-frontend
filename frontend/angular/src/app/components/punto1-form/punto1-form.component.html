@@ -1,0 +1,85 @@
+<div class="container text-center">
+    <legend class="mt-4 mb-4">Alta de nuevo producto</legend>
+    <div class="mb-3 row">
+        <div class="col-8 offset-2">
+            <form #productoForm="ngForm">
+                <div class="mb-3 row">
+                    <label for="inputNombre">Nombre</label>
+                    <input type="text" class="form-control" id="inputNombre" [(ngModel)]="producto.nombre"
+                        name="pnombre" #nombre="ngModel" required>
+                    <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert alert-danger">
+                        <div *ngIf="nombre.errors?.['required']">
+                            Este campo es obligatorio.
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="textarea">Descripción</label>
+                    <textarea class="form-control" [(ngModel)]="producto.descripcion" name="descripcion" id="textarea"
+                        cols="100%" rows="3" #txt="ngModel" minlength="30" required></textarea>
+                    <div *ngIf="txt.invalid && (txt.dirty || txt.touched)" class="alert alert-danger">
+                        <div *ngIf="txt.errors?.['required']">
+                            Este campo es obligatorio.
+                        </div>
+                        <div *ngIf="txt.errors?.['minlength']">
+                            Mínimo 30 caracteres.
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputImagen">URL imagen</label>
+                    <input type="text" class="form-control" id="inputImagen" [(ngModel)]="producto.imagen"
+                        name="urlImagen" #urlImagen="ngModel" required>
+                    <div *ngIf="urlImagen.invalid && (urlImagen.dirty || urlImagen.touched)" class="alert alert-danger">
+                        <div *ngIf="urlImagen.errors?.['required']">
+                            Este campo es obligatorio.
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputPrecio">Precio</label>
+                    <input type="number" class="form-control" id="inputPrecio" [(ngModel)]="producto.precio"
+                        name="pprecio" #precio="ngModel" required min="0">
+                    <div *ngIf="precio.invalid && (precio.dirty || precio.touched)" class="alert alert-danger">
+                        <div *ngIf="precio.errors?.['required']">
+                            Este campo es obligatorio.
+                        </div>
+                        <div *ngIf="precio.errors?.['min']">
+                            Ingrese un numero positivo.
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputStock">Stock</label>
+                    <input type="number" class="form-control" id="inputStock" [(ngModel)]="producto.stock" name="pstock"
+                        #stock="ngModel" required min="0">
+                    <div *ngIf="stock.invalid && (stock.dirty || stock.touched)" class="alert alert-danger">
+                        <div *ngIf="stock.errors?.['required']">
+                            Este campo es obligatorio.
+                        </div>
+                        <div *ngIf="stock.errors?.['min']">
+                            Ingrese un numero positivo.
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="form-check col-md-4 offset-md-4 col-8 offset-2">
+                        <input class="form-check-input" type="checkbox" value="destacado" id="flexCheckDefault"
+                            [(ngModel)]="producto.destacado" name="pdestacado">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Es un producto destacado.
+                        </label>
+                    </div>
+                </div>
+
+
+                <button type="submit" class="btn btn-dark mt-2 me-1" [disabled]="!productoForm.form.valid"
+                    (click)="guardar()" onclick="alert('Se guardó un producto.')"><i class="bi bi-plus-circle"></i>
+                    Guardar</button>
+                <button type="submit" class="btn btn-secondary mt-2 ms-1" (click)="volver()"><i
+                        class="bi bi-backspace"></i> Volver</button>
+            </form>
+
+        </div>
+    </div>
+</div>

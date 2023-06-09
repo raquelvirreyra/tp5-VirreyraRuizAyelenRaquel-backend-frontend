@@ -1,0 +1,49 @@
+<div class="container-md text-center">
+  <legend class="mt-4 mb-4">Tickets Vendidos</legend>
+  <button type="submit" class="btn btn-dark mt-2 mb-4" (click)="agregarTicket()"><i class="bi bi-plus-circle"></i>
+    Agregar ticket</button>
+
+  <form class="col-md-6 offset-md-3 mb-4" #filtro="ngForm">
+    <label for="espectSelect" class="form-label">Filtrar por tipo de espectador:</label>
+    <select id="espectSelect" class="form-select" [(ngModel)]="tipoEspectador" name="tipoEspectador" #tipo="ngModel" required>
+      <option>Local</option>
+      <option>Extranjero</option>
+    </select>
+    <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)" class="alert alert-danger">
+      <div *ngIf="tipo.errors?.['required']">
+        Este campo es requerido.
+      </div>
+    </div>
+  </form>
+  <button type="submit" class="btn btn-dark mb-4 me-1" [disabled]="!filtro.form.valid" (click)="filtrarTickets()">Consultar</button>
+  <button *ngIf="consulta==true" type="submit" class="btn btn-dark mb-4 ms-1" (click)="volver()">Ver todo</button>
+
+  <table class="table table-responsive" *ngIf="tickets.length>0">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Categoria Espectador</th>
+        <th scope="col">Fecha compra</th>
+        <th scope="col">Espectador</th>
+        <th colspan="2">Acciones</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let t of tickets">
+      <tr>
+        <th scope="row">{{t._id}}</th>
+        <td>{{t.precioTicket | currency: '$'}}</td>
+        <td>{{t.categoriaEspectador}}</td>
+        <td>{{t.fechaCompra}}</td>
+        <td>{{t.espectador.apellido}}, {{t.espectador.nombre}} - DNI: {{t.espectador.dni}}</td>
+        <td><button type="submit" class="btn btn-success" (click)="modificarTicket(t)"><i class="bi bi-pencil-square"></i></button></td>
+        <td><button type="submit" class="btn btn-danger" (click)="eliminarTicket(t)"><i class="bi bi-trash"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="mt-2" *ngIf="tickets.length==0">
+    <i class="bi bi-ticket"> No hay tickets vendidos todavía </i><i class="bi bi-ticket"></i>
+  </div>
+
+</div>

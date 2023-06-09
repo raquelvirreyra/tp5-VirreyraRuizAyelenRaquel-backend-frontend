@@ -1,0 +1,53 @@
+<div class="container text-center">
+    <div class="col-md-8 offset-md-2">
+        <legend class="mt-4 mb-4">Transacciones guardadas</legend>
+        <p>Filtrar por divisas:</p>
+        <form class="row mb-4" #filtrarDivisas="ngForm">
+            <div class="col-md-6">
+                <label for="deSelect" class="form-label">Divisa origen</label>
+                <select id="deSelect" class="form-select" [(ngModel)]="fromType" name="fromType" #from="ngModel"
+                    required>
+                    <option *ngFor="let m of monedas" [value]="m">{{m}}</option>
+                </select>
+                <div *ngIf="from.invalid && (from.dirty || from.touched)" class="alert alert-danger">
+                    <div *ngIf="from.errors?.['required']">
+                        Este campo es requerido.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="aSelect" class="form-label">Divisa destino</label>
+                <select id="aSelect" class="form-select" [(ngModel)]="toType" name="toType" #to="ngModel" required>
+                    <option *ngFor="let m of monedas" [value]="m">{{m}}</option>
+                </select>
+                <div *ngIf="to.invalid && (to.dirty || to.touched)" class="alert alert-danger">
+                    <div *ngIf="to.errors?.['required']">
+                        Este campo es requerido.
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <button type="submit" class="btn btn-dark mb-4 me-1" (click)="filtrarTransacciones()" [disabled]="!filtrarDivisas.form.valid">Consultar</button>
+        <button *ngIf="consulta==true" type="submit" class="btn btn-dark mb-4 ms-1" (click)="volver()" [disabled]="!filtrarDivisas.form.valid">Ver todo</button>
+
+        <table class="table table-responsive table-secondary border border-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Email Usuario</th>
+                    <th scope="col">Moneda origen</th>
+                    <th scope="col">Moneda Destino</th>
+                    <th scope="col">Cantidad origen</th>
+                    <th scope="col">Conversion</th>
+                </tr>
+            </thead>
+            <tbody class="text-black" *ngFor="let t of transacciones">
+                <td class="border-bottom border-dark p-2">{{t.emailCliente}}</td>
+                <td class="border-bottom border-dark p-2">{{t.monedaOrigen}}</td>
+                <td class="border-bottom border-dark p-2">{{t.monedaDestino}}</td>
+                <td class="border-bottom border-dark p-2">{{t.cantidadOrigen}}</td>
+                <td class="border-bottom border-dark p-2">{{t.cantidadDestino}}</td>
+            </tbody>
+        </table>
+    </div>
+</div>

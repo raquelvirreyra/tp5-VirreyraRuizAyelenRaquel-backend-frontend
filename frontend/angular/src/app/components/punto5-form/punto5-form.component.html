@@ -1,0 +1,67 @@
+<div class="container text-center">
+    <legend class=" mt-4 mb-4">Venta de Tickets</legend>
+    <div class="mb-3 row">
+        <div class="col-8 offset-2">
+            <form #ticketForm="ngForm">
+                <div class="mb-3 row">
+                    <label for="selectEspec" class="col-sm-3 col-form-label">Espectador</label>
+                    <div class="col-sm-9">
+                        <select required class="form-select" id="selectEspec" [(ngModel)]="ticket.espectador" name="espect" #espec="ngModel" required>
+                            <option *ngFor="let e of espectadores" [ngValue]="e">{{e.nombre}} {{e.apellido}} - DNI: {{e.dni}}</option>
+                        </select>
+                        <div *ngIf="espec.invalid && (espec.dirty || espec.touched)" class="alert alert-danger">
+                            <div *ngIf="espec.errors?.['required']">
+                                Este campo es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                <div class="mb-3 row">
+                    <label for="inputPrecioReal" class="col-sm-3 col-form-label">Precio</label>
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" id="inputPrecioReal" [(ngModel)]="ticket.precioTicket" name="precioReal" #precioReal="ngModel" required>
+                      <div *ngIf="precioReal.invalid && (precioReal.dirty || precioReal.touched)" class="alert alert-danger">                     
+                            <div *ngIf="precioReal.errors?.['required']">
+                            Precio real es requerido.
+                            </div>
+                      </div>       
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="seectTipoEspec" class="col-sm-3 col-form-label">Tipo de Espectador</label>
+                    <div class="col-sm-9">
+                        <select required class="form-select" id="seectTipoEspec" [(ngModel)]="ticket.categoriaEspectador" name="tipoEspectador" #tipoEspectador="ngModel" (click)="getPrecio()">
+                            <option>Local</option>
+                            <option>Extranjero</option>
+                        </select>
+                        <div *ngIf="tipoEspectador.invalid && (tipoEspectador.dirty || tipoEspectador.touched)" class="alert alert-danger">                     
+                            <div *ngIf="tipoEspectador.errors?.['required']">
+                            Tipo espectador es requerido.
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputFechaCobro" class="col-sm-3 col-form-label">Fecha de Compra</label>
+                    <div class="col-sm-9">
+                      <input type="date" class="form-control" id="inputFechaCobro" [(ngModel)]="ticket.fechaCompra" name="fechaCobro" #fechaCobro="ngModel" required>
+                      <div *ngIf="fechaCobro.invalid && (fechaCobro.dirty || fechaCobro.touched)" class="alert alert-danger">                     
+                            <div *ngIf="fechaCobro.errors?.['required']">
+                            Fecha de cobro es requerida.
+                            </div>
+                      </div> 
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputPrecioCobrado" class="col-sm-3 col-form-label">Precio cobrado</label>
+                    <fieldset disabled class="col-sm-9">
+                        <input type="number" class="form-control" id="inputPrecioCobrado" name="precioCobrado" placeholder="{{precioFinal | currency: '$'}}">
+                    </fieldset>
+                </div>
+                <button *ngIf="ticket._id==null" type="submit" class="btn btn-dark mt-2 me-1" (click)="guardarTicket()" [disabled]="!ticketForm.form.valid"><i class="bi bi-plus-circle"></i> Guardar ticket</button>
+                <button *ngIf="ticket._id!=null" type="submit" class="btn btn-success mt-2 me-1" (click)="modificarTicket(ticket)"><i class="bi bi-plus-circle"></i> Modificar ticket</button>
+                <button type="submit" class="btn btn-secondary mt-2 ms-1" (click)="volver()"><i class="bi bi-backspace"></i> Volver</button>
+            </form>
+        </div>
+    </div>
+</div>
