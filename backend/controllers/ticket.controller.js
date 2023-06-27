@@ -62,9 +62,14 @@ ticketCtrl.deleteTicket = async (req, res) => {
 }
 
 ticketCtrl.editTicket = async (req, res) => {
-    const ticket = new Ticket(req.body);
+
+    var { precioTicket, categoriaEspectador } = req.body;
 
     try {
+        if (categoriaEspectador == "Local"){
+            precioTicket = precioTicket - ( precioTicket * 20 / 100 );
+        }
+        var ticket = new Ticket({ ...req.body, precioTicket });
         await Ticket.updateOne({ _id: req.body._id }, ticket);
         res.json({
             'status': '1',

@@ -14,7 +14,6 @@ export class Punto5FormComponent implements OnInit {
   ticket!:Ticket;
   accion!:string;
   espectadores!:Array<Espectador>;
-  precioFinal!:number;
   modificar:boolean=true;
 
   constructor(private router:Router,
@@ -92,13 +91,5 @@ export class Punto5FormComponent implements OnInit {
         console.log(error);
       }
     );
-  }
-
-  getPrecio():void{
-    if (this.ticket.categoriaEspectador=="Local"){
-      this.precioFinal = this.ticket.precioTicket - this.ticket.precioTicket * 20 / 100;
-    }else{
-      this.precioFinal = this.ticket.precioTicket;
-    }
   }
 }
