@@ -68,12 +68,18 @@ export class Punto5FormComponent implements OnInit {
     );
   }
 
-  cargarTicket(id:string):void{
-    this.ticket= new Ticket();
+  cargarTicket(id: string): void {
+    this.ticket = new Ticket();
     this.ticketService.getTicket(id).subscribe(
       result => {
         Object.assign(this.ticket, result);
         console.log(this.ticket);
+  
+        // Buscar el espectador correspondiente en la lista de espectadores
+        const espectadorSeleccionado = this.espectadores.find(e => e._id === this.ticket.espectador._id);
+        if (espectadorSeleccionado) {
+          this.ticket.espectador = espectadorSeleccionado;
+        }
       },
       error => {
         console.log(error);
