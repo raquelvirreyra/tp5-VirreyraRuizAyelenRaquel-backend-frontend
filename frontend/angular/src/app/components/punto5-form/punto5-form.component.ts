@@ -75,7 +75,7 @@ export class Punto5FormComponent implements OnInit {
         Object.assign(this.ticket, result);
         console.log(this.ticket);
   
-        // Buscar el espectador correspondiente en la lista de espectadores
+        // Buscar el espectador correspondiente en el array de espectadores
         const espectadorSeleccionado = this.espectadores.find(e => e._id === this.ticket.espectador._id);
         if (espectadorSeleccionado) {
           this.ticket.espectador = espectadorSeleccionado;
